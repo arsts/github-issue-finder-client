@@ -7,13 +7,11 @@ const authInitialState = {
   error: "",
 };
 
-const issuesInitialState = {
+const searchUserInitialState = {
   isPending: false,
   error: "",
-  userSearchTerm: "",
+  userSearchTerm: "facebook",
   userGit: {},
-  repoGit: null,
-  issuesGit: null,
 };
 
 const REQUEST_USER_PENDING = "github-issue-finder/auth/REQUEST_USER_PENDING";
@@ -26,7 +24,6 @@ const SEARCH_USER_GIT_SUCCESS =
   "github-issue-finder/issues/SEARCH_USER_GIT_SUCCESS";
 const SEARCH_USER_GIT_FAILED =
   "github-issue-finder/issues/SEARCH_USER_GIT_FAILED";
-
 const SET_USER_SEARCH_TERM = "github-issue-finder/issues/SET_USER_SEARCH_TERM";
 
 export const authReducer = (state = authInitialState, action = {}) => {
@@ -49,7 +46,10 @@ export const authReducer = (state = authInitialState, action = {}) => {
   }
 };
 
-export const issuesReducer = (state = issuesInitialState, action = {}) => {
+export const searchUserReducer = (
+  state = searchUserInitialState,
+  action = {}
+) => {
   switch (action.type) {
     case SEARCH_USER_GIT_PENDING:
       return Object.assign({}, state, { isPending: true });

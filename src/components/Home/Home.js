@@ -9,7 +9,13 @@ const Home = ({
   setUserSearchTerm,
   userSearchTerm,
   searchUserGit,
-  getAuthUserData,
+  setRepoSearchTerm,
+  getIssues,
+  repoSearchTerm,
+  issues,
+  currentPage,
+  totalPages,
+  setCurrentPage,
 }) => {
   return (
     <div>
@@ -25,23 +31,33 @@ const Home = ({
             Fill in user field to get user information and repository field to
             get all issues.
           </p>
+          <p>{userSearchTerm}</p>
         </Card.Body>
       </Card>
       <Card className="mb-3">
         <Card.Body>
           <SearchPanel
-          // setUserSearchTerm={setUserSearchTerm}
-          // userSearchTerm={userSearchTerm}
-          // searchUserGit={searchUserGit}
-          // getAuthUserData={getAuthUserData}
+            setUserSearchTerm={setUserSearchTerm}
+            userSearchTerm={userSearchTerm}
+            searchUserGit={searchUserGit}
+            setRepoSearchTerm={setRepoSearchTerm}
+            getIssues={getIssues}
+            repoSearchTerm={repoSearchTerm}
+            currentPage={currentPage}
           />
         </Card.Body>
       </Card>
-      <Card className="mb-3">
-        <Card.Body>
-          <IssuesTable />
-        </Card.Body>
-      </Card>
+      <div className="mb-3 ">
+        <IssuesTable
+          issues={issues}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+          userSearchTerm={userSearchTerm}
+          repoSearchTerm={repoSearchTerm}
+          getIssues={getIssues}
+        />
+      </div>
     </div>
   );
 };

@@ -1,10 +1,13 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunkMiddleware from "redux-thunk";
-import { issuesReducer, authReducer } from "./reducers";
+import { searchUserReducer, authReducer } from "./reducers";
+import { issuesReducer } from "./issues-reducer";
+import logger from "redux-logger";
 
 const rootReducer = combineReducers({
-  issuesReducer,
+  searchUserReducer,
   authReducer,
+  issuesReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

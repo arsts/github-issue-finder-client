@@ -1,17 +1,33 @@
 import React from "react";
 import { Form, Row, Col } from "react-bootstrap";
-import { connect } from "react-redux";
-import { setUserSearchTerm, searchUserGit } from "../../redux/reducers";
 
-const SearchPanel = ({ setUserSearchTerm, userSearchTerm, searchUserGit }) => {
+const SearchPanel = ({
+  setUserSearchTerm,
+  userSearchTerm,
+  searchUserGit,
+  getIssues,
+  setRepoSearchTerm,
+  repoSearchTerm,
+  currentPage,
+}) => {
+  console.log(currentPage);
+
   const handleUserChange = (e) => {
     setUserSearchTerm(e.target.value);
   };
   const handleUserSubmit = (e) => {
     if (e.key === "Enter") {
       // dispatch thunk
-
       searchUserGit(userSearchTerm);
+    }
+  };
+  const handleRepoChange = (e) => {
+    setRepoSearchTerm(e.target.value);
+  };
+  const handleRepoSubmit = (e) => {
+    if (e.key === "Enter") {
+      // dispatch thunk
+      getIssues(userSearchTerm, repoSearchTerm, currentPage);
     }
   };
   return (
@@ -27,20 +43,17 @@ const SearchPanel = ({ setUserSearchTerm, userSearchTerm, searchUserGit }) => {
           />
         </Col>
         <Col>
-          <Form.Control type="text" placeholder="Find a repository..." />
+          <Form.Control
+            type="text"
+            placeholder="Find a repository..."
+            value={repoSearchTerm}
+            onChange={handleRepoChange}
+            onKeyDown={handleRepoSubmit}
+          />
         </Col>
       </Row>
     </Form>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    userSearchTerm: state.issuesReducer.userSearchTerm,
-  };
-};
-
-export default connect(mapStateToProps, {
-  setUserSearchTerm,
-  searchUserGit,
-})(SearchPanel);
+export default SearchPanel;

@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "./App.css";
 import Content from "./components/Layout/Content";
+import Footer from "./components/Layout/Footer";
+import Header from "./components/Layout/Header";
 import { Switch, Route, NavLink, withRouter } from "react-router-dom";
 import HomeContainer from "./components/Home/HomeContainer";
 import Login from "./components/Login/Login";
@@ -12,44 +14,35 @@ import { getAuthUserData } from "./redux/reducers";
 
 class App extends React.Component {
   componentDidMount() {
-    this.props.getAuthUserData();
+    if (!this.props.isAuth) this.props.getAuthUserData();
   }
 
   render() {
-    const { user, isPending, isAuth, getAuthUserData } = this.props;
     return (
       <div className="App">
-        <Navbar bg="dark">
-          <Navbar.Brand style={{ color: "white" }}>Issue Finder</Navbar.Brand>
-          <Nav className="mr-auto">
-            <NavLink to="/login" className="nav-link">
-              Login
-            </NavLink>
-            <NavLink to="/" className="nav-link">
-              Home
-            </NavLink>
-            <NavLink to="/issue" className="nav-link">
-              Issues
-            </NavLink>
-          </Nav>
-          {/* {isAuth ? (
-            <Image
-              src={user.avatar_url}
-              style={{ height: "30px", width: "30px" }}
-              roundedCircle
-            />
-          ) : (
-            "no User"
-          )} */}
-        </Navbar>
+        <Header>
+          <Navbar bg="dark">
+            <Navbar.Brand style={{ color: "white" }}>Issue Finder</Navbar.Brand>
+            <Nav className="mr-auto">
+              <NavLink to="/login" className="nav-link">
+                Login
+              </NavLink>
+              <NavLink to="/" className="nav-link">
+                Home
+              </NavLink>
+            </Nav>
+          </Navbar>
+        </Header>
         <Content>
           <Switch>
             <Route exact path="/" render={() => <HomeContainer />} />
             <Route path="/login" render={() => <Login />} />
-            <Route path="/issue" render={() => <Issue />} />
+            <Route path="/issue/:index/:id" component={Issue} />
           </Switch>
         </Content>
-        <br />
+        <Footer>
+          <p className="text-center">Footer</p>
+        </Footer>
       </div>
     );
   }
@@ -57,9 +50,9 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.issuesReducer.user,
-    isAuth: state.issuesReducer.isAuth,
-    isPending: state.issuesReducer.isPending,
+    user: state.searchUserReducer.user,
+    isAuth: state.searchUserReducer.isAuth,
+    isPending: state.searchUserReducer.isPending,
   };
 };
 
